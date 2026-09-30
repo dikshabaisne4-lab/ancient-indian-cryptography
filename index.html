@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ancient Indian Cryptography</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #faf8f1;
+    color: #29251f;
+    line-height: 1.6;
+}
+
+/* NAVBAR */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,248,241,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #ddd7ca;
+    padding: 15px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #5c4a2d;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #403a31;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #9b742d;
+}
+
+/* HERO */
+.hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 70px 20px;
+    background:
+        radial-gradient(circle at 20% 30%, #f0e5c7 0, transparent 30%),
+        radial-gradient(circle at 80% 70%, #eadfc1 0, transparent 30%);
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 13px;
+    color: #9b742d;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 1.05;
+    margin-bottom: 25px;
+    color: #403522;
+}
+
+.hero p {
+    max-width: 680px;
+    margin: auto;
+    color: #665f54;
+    font-size: 18px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 13px 27px;
+    background: #403522;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: #72582c;
+}
+
+/* SECTIONS */
+section {
+    padding: 90px 7%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title span {
+    color: #9b742d;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    color: #403522;
+    margin-top: 8px;
+}
+
+.section-title p {
+    max-width: 700px;
+    margin: 12px auto;
+    color: #70695e;
+}
+
+/* ABOUT */
+.about-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.info-box {
+    background: white;
+    border: 1px solid #e1dbce;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.info-box h3 {
+    color: #624d2c;
+    margin-bottom: 12px;
+}
+
+/* CONCEPTS */
+.concepts {
+    background: #f1ecdf;
+}
+
+.concept-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+}
+
+.concept {
+    background: #fffdf8;
+    border: 1px solid #ded7c8;
+    border-radius: 18px;
+    padding: 25px;
+    min-height: 190px;
+    transition: .25s;
+}
+
+.concept:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(70,55,30,.08);
+}
+
+.concept-number {
+    font-size: 13px;
+    color: #a37b32;
+    margin-bottom: 15px;
+}
+
+.concept h3 {
+    margin-bottom: 10px;
+    color: #403522;
+}
+
+.concept p {
+    font-size: 14px;
+    color: #6d665b;
+}
+
+/* HOW IT WORKS */
+.steps {
+    max-width: 950px;
+    margin: auto;
+}
+
+.step {
+    display: flex;
+    gap: 25px;
+    padding: 25px 0;
+    border-bottom: 1px solid #ded8cc;
+}
+
+.step-number {
+    min-width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e8d8ad;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+    color: #59451f;
+}
+
+.step h3 {
+    margin-bottom: 5px;
+}
+
+/* EXAMPLES */
+.examples {
+    background: #f1ecdf;
+}
+
+.example-grid {
+    max-width: 900px;
+    margin: auto;
+    display: grid;
+    gap: 18px;
+}
+
+.example {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #ded7c8;
+}
+
+.example strong {
+    color: #72572a;
+}
+
+/* GAME */
+.game-section {
+    background: #fbfaf5;
+}
+
+.game-wrapper {
+    max-width: 800px;
+    margin: auto;
+}
+
+.game-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: flex;
+    gap: 25px;
+}
+
+.stat small {
+    display: block;
+    color: #8b857a;
+    font-size: 12px;
+}
+
+.stat strong {
+    font-size: 17px;
+}
+
+.undo {
+    border: 1px solid #d7d0c2;
+    background: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.progress-area {
+    margin-bottom: 25px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #777066;
+    margin-bottom: 7px;
+}
+
+.progress {
+    height: 5px;
+    background: #e6e1d7;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #8c713e;
+    transition: width .3s;
+}
+
+/* CARDS */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+}
+
+.card {
+    height: 150px;
+    border: 1px solid #dcd6ca;
+    border-radius: 15px;
+    background: #fff;
+    cursor: pointer;
+    perspective: 800px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform .45s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    text-align: center;
+}
+
+.card-front {
+    background: #fff;
+}
+
+.card-front::after {
+    content: "";
+    width: 45px;
+    height: 45px;
+    background: #eadcae;
+    border-radius: 8px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: #f7f2e5;
+    border: 1px solid #e1d5b9;
+    color: #443a2c;
+    font-size: 14px;
+}
+
+.card-back.name {
+    font-size: 17px;
+    font-weight: bold;
+    color: #624b25;
+}
+
+.card.matched {
+    cursor: default;
+}
+
+.card.matched .card-back {
+    background: #eee8d8;
+}
+
+/* GAME MESSAGE */
+.game-message {
+    text-align: center;
+    margin-top: 30px;
+    min-height: 70px;
+}
+
+.game-message h3 {
+    color: #624d2c;
+}
+
+.restart {
+    border: none;
+    background: #403522;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 35px 20px;
+    background: #403522;
+    color: #eee7d8;
+}
+
+footer p {
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 850px) {
+    .concept-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width: 650px) {
+
+    nav {
+        padding: 13px 5%;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    section {
+        padding: 65px 5%;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .concept-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-grid {
+        gap: 7px;
+    }
+
+    .card {
+        height: 105px;
+    }
+
+    .card-back {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .card-back.name {
+        font-size: 13px;
+    }
+
+    .stats {
+        gap: 12px;
+    }
+
+    .section-title h2 {
+        font-size: 32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">Ancient Codes</div>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">History</a></li>
+        <li><a href="#concepts">Concepts</a></li>
+        <li><a href="#how">How It Worked</a></li>
+        <li><a href="#game">Game</a></li>
+    </ul>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            History • Mathematics • Language
+        </div>
+
+        <h1>
+            Ancient Indian<br>
+            Cryptography
+        </h1>
+
+        <p>
+            Discover how ancient Indian scholars used words, letters,
+            numbers, symbols and linguistic techniques to encode,
+            remember and communicate information.
+        </p>
+
+        <a href="#about" class="btn">
+            Explore the History
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+
+    <div class="section-title">
+
+        <span>Historical Context</span>
+
+        <h2>Codes Before Computers</h2>
+
+        <p>
+            Ancient Indian intellectual traditions developed sophisticated
+            ways of representing numerical and other information through
+            language and symbolic systems.
+        </p>
+
+    </div>
+
+    <div class="about-grid">
+
+        <div class="info-box">
+
+            <h3>What was the purpose?</h3>
+
+            <p>
+                Information could be expressed through words, letters,
+                verses and symbols. Such techniques could make numerical
+                information easier to remember, communicate or conceal.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h3>Where were they used?</h3>
+
+            <p>
+                Number-encoding traditions appear in mathematical,
+                astronomical, poetic and scholarly contexts. Some
+                classical texts also describe forms of secret writing.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h3>Why is it interesting?</h3>
+
+            <p>
+                These traditions show how language and mathematics could
+                work together to represent information long before
+                modern digital cryptography.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h3>Cryptography or encoding?</h3>
+
+            <p>
+                Not every ancient technique was cryptography in the modern
+                sense. Many were systems for numerical encoding, mnemonic
+                representation or secret writing.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONCEPTS -->
+<section class="concepts" id="concepts">
+
+    <div class="section-title">
+
+        <span>Major Traditions</span>
+
+        <h2>Eight Key Concepts</h2>
+
+        <p>
+            Learn the major ideas before testing your knowledge in the
+            matching game.
+        </p>
+
+    </div>
+
+    <div class="concept-grid">
+
+        <div class="concept">
+            <div class="concept-number">01</div>
+            <h3>Bhuta Sankhya</h3>
+            <p>
+                A system of representing numbers using meaningful words
+                associated with things or concepts.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">02</div>
+            <h3>Katapayadi System</h3>
+            <p>
+                A system that assigns numerical values to letters,
+                allowing numbers to be represented through words.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">03</div>
+            <h3>Aryabhata's Numeration</h3>
+            <p>
+                A letter-based numerical notation associated with
+                Aryabhata's mathematical tradition.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">04</div>
+            <h3>Mlecchita Vikalpa</h3>
+            <p>
+                A classical reference associated with techniques of
+                secret or cryptic writing.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">05</div>
+            <h3>Sanskrit Numerical Encoding</h3>
+            <p>
+                Representing numerical information through Sanskrit
+                words, expressions or verses.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">06</div>
+            <h3>Mathematical Mnemonics</h3>
+            <p>
+                Using memorable linguistic forms to help preserve and
+                recall mathematical information.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">07</div>
+            <h3>Secret Writing</h3>
+            <p>
+                Writing practices designed to make a message difficult
+                for an unintended reader to understand.
+            </p>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">08</div>
+            <h3>Symbolic Encoding</h3>
+            <p>
+                Representing information using symbols, letters or
+                meaningful signs instead of direct notation.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKED -->
+<section id="how">
+
+    <div class="section-title">
+
+        <span>The Basic Idea</span>
+
+        <h2>How Encoding Worked</h2>
+
+        <p>
+            Different traditions used different relationships between
+            language, numbers and meaning.
+        </p>
+
+    </div>
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">1</div>
+
+            <div>
+                <h3>Choose information</h3>
+                <p>
+                    A number, mathematical value or message was selected
+                    for representation.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="step">
+
+            <div class="step-number">2</div>
+
+            <div>
+                <h3>Map it to language</h3>
+                <p>
+                    Words, letters, symbols or meaningful associations
+                    were used to represent the information.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="step">
+
+            <div class="step-number">3</div>
+
+            <div>
+                <h3>Construct a memorable form</h3>
+                <p>
+                    The representation could be arranged into a word,
+                    phrase or verse.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="step">
+
+            <div class="step-number">4</div>
+
+            <div>
+                <h3>Decode when needed</h3>
+                <p>
+                    Someone familiar with the particular system could
+                    interpret the encoded representation.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EXAMPLES -->
+<section class="examples">
+
+    <div class="section-title">
+
+        <span>Examples</span>
+
+        <h2>Words Can Carry Numbers</h2>
+
+        <p>
+            Ancient Indian encoding traditions often connected familiar
+            concepts with numerical values.
+        </p>
+
+    </div>
+
+    <div class="example-grid">
+
+        <div class="example">
+            <strong>Bhuta Sankhya:</strong>
+            meaningful objects or concepts could be associated with
+            numerical values.
+        </div>
+
+        <div class="example">
+            <strong>Katapayadi:</strong>
+            letters could be associated with digits, allowing numerical
+            sequences to be expressed as words.
+        </div>
+
+        <div class="example">
+            <strong>Mnemonic verses:</strong>
+            mathematical or astronomical information could be placed
+            into memorable linguistic forms.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GAME -->
+<section class="game-section" id="game">
+
+    <div class="section-title">
+
+        <span>Interactive Learning</span>
+
+        <h2>Match the Ancient Codes</h2>
+
+        <p>
+            Match each concept with its correct definition.
+        </p>
+
+    </div>
+
+    <div class="game-wrapper">
+
+        <div class="game-top">
+
+            <div class="stats">
+
+                <div class="stat">
+                    <small>MOVES</small>
+                    <strong id="moves">0</strong>
+                </div>
+
+                <div class="stat">
+                    <small>TIME</small>
+                    <strong id="timer">00:00</strong>
+                </div>
+
+            </div>
+
+            <button class="undo" onclick="undoLast()" title="Undo">
+                ↶
+            </button>
+
+        </div>
+
+
+        <div class="progress-area">
+
+            <div class="progress-text">
+
+                <span>Progress</span>
+
+                <span id="progressText">0/8</span>
+
+            </div>
+
+            <div class="progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+        </div>
+
+
+        <div class="game-grid" id="gameGrid"></div>
+
+
+        <div class="game-message" id="gameMessage"></div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <p>
+        Ancient Codes • Ancient Indian Cryptography & Encoding Traditions
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   GAME DATA
+========================================== */
+
+const pairs = [
+
+    {
+        id: 1,
+        name: "Bhuta Sankhya",
+        definition:
+        "A system of representing numbers using meaningful words or objects."
+    },
+
+    {
+        id: 2,
+        name: "Katapayadi System",
+        definition:
+        "A system that assigns numerical values to letters for encoding numbers."
+    },
+
+    {
+        id: 3,
+        name: "Aryabhata's Numeration",
+        definition:
+        "A letter-based numerical notation associated with Aryabhata's mathematical tradition."
+    },
+
+    {
+        id: 4,
+        name: "Mlecchita Vikalpa",
+        definition:
+        "A classical reference associated with secret or cryptic writing."
+    },
+
+    {
+        id: 5,
+        name: "Sanskrit Numerical Encoding",
+        definition:
+        "Representing numerical information through Sanskrit words, expressions or verses."
+    },
+
+    {
+        id: 6,
+        name: "Mathematical Mnemonics",
+        definition:
+        "Using memorable linguistic forms to help preserve and recall mathematical information."
+    },
+
+    {
+        id: 7,
+        name: "Secret Writing",
+        definition:
+        "Writing practices designed to make a message difficult for an unintended reader to understand."
+    },
+
+    {
+        id: 8,
+        name: "Symbolic Encoding",
+        definition:
+        "Representing information using symbols, letters or meaningful signs instead of direct notation."
+    }
+
+];
+
+
+/* ==========================================
+   GAME VARIABLES
+========================================== */
+
+let cards = [];
+
+let firstCard = null;
+let secondCard = null;
+
+let lockBoard = false;
+
+let moves = 0;
+let matched = 0;
+
+let seconds = 0;
+let timerInterval = null;
+let gameStarted = false;
+
+let history = [];
+
+
+/* ==========================================
+   SHUFFLE
+========================================== */
+
+function shuffle(array) {
+
+    return array.sort(() => Math.random() - 0.5);
+
+}
+
+
+/* ==========================================
+   CREATE CARDS
+========================================== */
+
+function createCards() {
+
+    cards = [];
+
+    pairs.forEach(pair => {
+
+        cards.push({
+            id: pair.id,
+            type: "name",
+            text: pair.name
+        });
+
+        cards.push({
+            id: pair.id,
+            type: "definition",
+            text: pair.definition
+        });
+
+    });
+
+    shuffle(cards);
+
+}
+
+
+/* ==========================================
+   DISPLAY GAME
+========================================== */
+
+function renderGame() {
+
+    const grid = document.getElementById("gameGrid");
+
+    grid.innerHTML = "";
+
+    cards.forEach((card, index) => {
+
+        const element = document.createElement("div");
+
+        element.className = "card";
+
+        element.dataset.index = index;
+
+        element.innerHTML = `
+
+            <div class="card-inner">
+
+                <div class="card-front"></div>
+
+                <div class="card-back ${card.type === "name" ? "name" : ""}">
+                    ${card.text}
+                </div>
+
+            </div>
+
+        `;
+
+        element.addEventListener("click", () => flipCard(element));
+
+        grid.appendChild(element);
+
+    });
+
+}
+
+
+/* ==========================================
+   START TIMER
+========================================== */
+
+function startTimer() {
+
+    if (gameStarted) return;
+
+    gameStarted = true;
+
+    timerInterval = setInterval(() => {
+
+        seconds++;
+
+        const minutes =
+            Math.floor(seconds / 60)
+            .toString()
+            .padStart(2, "0");
+
+        const secs =
+            (seconds % 60)
+            .toString()
+            .padStart(2, "0");
+
+        document.getElementById("timer").textContent =
+            `${minutes}:${secs}`;
+
+    }, 1000);
+
+}
+
+
+/* ==========================================
+   FLIP CARD
+========================================== */
+
+function flipCard(element) {
+
+    if (lockBoard) return;
+
+    if (element.classList.contains("flipped")) return;
+
+    if (element.classList.contains("matched")) return;
+
+    startTimer();
+
+    element.classList.add("flipped");
+
+    if (!firstCard) {
+
+        firstCard = element;
+
+        return;
+
+    }
+
+    secondCard = element;
+
+    moves++;
+
+    document.getElementById("moves").textContent = moves;
+
+    checkMatch();
+
+}
+
+
+/* ==========================================
+   CHECK MATCH
+========================================== */
+
+function checkMatch() {
+
+    lockBoard = true;
+
+    const firstIndex =
+        Number(firstCard.dataset.index);
+
+    const secondIndex =
+        Number(secondCard.dataset.index);
+
+    const firstData =
+        cards[firstIndex];
+
+    const secondData =
+        cards[secondIndex];
+
+
+    const isMatch =
+        firstData.id === secondData.id &&
+        firstData.type !== secondData.type;
+
+
+    if (isMatch) {
+
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        matched++;
+
+        history.push({
+            first: firstIndex,
+            second: secondIndex,
+            matched: true
+        });
+
+        updateProgress();
+
+        resetTurn();
+
+        if (matched === pairs.length) {
+
+            finishGame();
+
+        }
+
+    } else {
+
+        history.push({
+            first: firstIndex,
+            second: secondIndex,
+            matched: false
+        });
+
+        setTimeout(() => {
+
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+
+            resetTurn();
+
+        }, 900);
+
+    }
+
+}
+
+
+/* ==========================================
+   RESET TURN
+========================================== */
+
+function resetTurn() {
+
+    firstCard = null;
+    secondCard = null;
+
+    lockBoard = false;
+
+}
+
+
+/* ==========================================
+   UPDATE PROGRESS
+========================================== */
+
+function updateProgress() {
+
+    document.getElementById("progressText").textContent =
+        `${matched}/8`;
+
+    document.getElementById("progressFill").style.width =
+        `${(matched / 8) * 100}%`;
+
+}
+
+
+/* ==========================================
+   FINISH GAME
+========================================== */
+
+function finishGame() {
+
+    clearInterval(timerInterval);
+
+    document.getElementById("gameMessage").innerHTML = `
+
+        <h3>🎉 All Ancient Codes Matched!</h3>
+
+        <p>
+            You completed the game in
+            <strong>${moves}</strong> moves
+            and
+            <strong>${document.getElementById("timer").textContent}</strong>.
+        </p>
+
+        <button class="restart" onclick="restartGame()">
+            Play Again
+        </button>
+
+    `;
+
+}
+
+
+/* ==========================================
+   UNDO
+========================================== */
+
+function undoLast() {
+
+    if (lockBoard) return;
+
+    if (history.length === 0) return;
+
+    const last = history.pop();
+
+    const first =
+        document.querySelector(
+            `[data-index="${last.first}"]`
+        );
+
+    const second =
+        document.querySelector(
+            `[data-index="${last.second}"]`
+        );
+
+
+    if (last.matched) {
+
+        first.classList.remove("matched");
+        second.classList.remove("matched");
+
+        matched--;
+
+        updateProgress();
+
+    }
+
+
+    first.classList.remove("flipped");
+    second.classList.remove("flipped");
+
+    if (moves > 0) {
+
+        moves--;
+
+        document.getElementById("moves").textContent = moves;
+
+    }
+
+}
+
+
+/* ==========================================
+   RESTART
+========================================== */
+
+function restartGame() {
+
+    clearInterval(timerInterval);
+
+    moves = 0;
+    matched = 0;
+    seconds = 0;
+
+    firstCard = null;
+    secondCard = null;
+
+    lockBoard = false;
+    gameStarted = false;
+
+    history = [];
+
+    document.getElementById("moves").textContent = "0";
+    document.getElementById("timer").textContent = "00:00";
+
+    document.getElementById("gameMessage").innerHTML = "";
+
+    updateProgress();
+
+    createCards();
+
+    renderGame();
+
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+restartGame();
+
+</script>
+
+</body>
+</html>
